@@ -1,168 +1,289 @@
-.widget {
-	@include flex;
-	background: $white;
-	padding: $card-spacer-y $card-spacer-x;
-	border-radius: $card-border-radius;
-	margin: 30px 0;
-	align-items: center;
+//
+// Base styles
+//
 
-	.icon-wrapper {
-		width: 40px;
-		padding: 0 5px;
-		margin-right: 10px;
-		font-size: 30px;
-		opacity:.8;
-	}
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0; // See https://github.com/twbs/bootstrap/pull/22740#issuecomment-305868106
+  word-wrap: break-word;
+  background-color: $card-bg;
+  background-clip: border-box;
+  border: $card-border-width solid $card-border-color;
+  @include border-radius($card-border-radius);
 
-	.infos-wrapper {
-		flex-grow: 1;
-		padding: 10px;
+  > hr {
+    margin-right: 0;
+    margin-left: 0;
+  }
 
-		h4 {
-			margin: 0;
-			margin-bottom: 4px;
-		}
+  > .list-group:first-child {
+    .list-group-item:first-child {
+      @include border-top-radius($card-border-radius);
+    }
+  }
 
-		p {
-			margin: 0;
-		}
-	}
+  > .list-group:last-child {
+    .list-group-item:last-child {
+      @include border-bottom-radius($card-border-radius);
+    }
+  }
+}
+
+.card-body {
+  // Enable `flex-grow: 1` for decks and groups so that card blocks take up
+  // as much space as possible, ensuring footers are aligned to the bottom.
+  flex: 1 1 auto;
+  padding: $card-spacer-x;
+  color: $card-color;
+}
+
+.card-title {
+  margin-bottom: $card-spacer-y;
+}
+
+.card-subtitle {
+  margin-top: -$card-spacer-y / 2;
+  margin-bottom: 0;
+}
+
+.card-text:last-child {
+  margin-bottom: 0;
+}
+
+.card-link {
+  @include hover {
+    text-decoration: none;
+  }
+
+  + .card-link {
+    margin-left: $card-spacer-x;
+  }
+}
+
+//
+// Optional textual caps
+//
+
+.card-header {
+  padding: $card-spacer-y $card-spacer-x;
+  margin-bottom: 0; // Removes the default margin-bottom of <hN>
+  color: $card-cap-color;
+  background-color: $card-cap-bg;
+  border-bottom: $card-border-width solid $card-border-color;
+
+  &:first-child {
+    @include border-radius($card-inner-border-radius $card-inner-border-radius 0 0);
+  }
+
+  + .list-group {
+    .list-group-item:first-child {
+      border-top: 0;
+    }
+  }
+}
+
+.card-footer {
+  padding: $card-spacer-y $card-spacer-x;
+  background-color: $card-cap-bg;
+  border-top: $card-border-width solid $card-border-color;
+
+  &:last-child {
+    @include border-radius(0 0 $card-inner-border-radius $card-inner-border-radius);
+  }
 }
 
 
-.textmonial-item {
-	@include flex;
-	align-items: center;
+//
+// Header navs
+//
 
-	.avatar {
-		min-width: 150px;
-		max-width: 150px;
-		min-height: 150px;
-		max-height: 150px;
-		border-radius: 50%;
-		margin-right: 40px;
-	}
-
-	.des {
-		flex-grow: 1;
-		padding: 20px 0;
-	}
-
-	.line {
-		width: 70px;
-		height: 2px;
-		border-radius: 2px;
-		background: $primary;
-		margin-bottom: 7px;
-		margin-top: -5px;
-	}
-
-	.name {
-		margin-bottom: 3px;
-	}
+.card-header-tabs {
+  margin-right: -$card-spacer-x / 2;
+  margin-bottom: -$card-spacer-y;
+  margin-left: -$card-spacer-x / 2;
+  border-bottom: 0;
 }
-@include media-breakpoint-down(sm) {
 
-	.textmonial-item {
-		.avatar {
-			max-width: 80px;
-			min-width: 80px;
-			max-height: 80px;
-			min-height: 80px;
-			margin-right: 20px;
-		}
-	}
+.card-header-pills {
+  margin-right: -$card-spacer-x / 2;
+  margin-left: -$card-spacer-x / 2;
+}
+
+// Card image
+.card-img-overlay {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: $card-img-overlay-padding;
+}
+
+.card-img {
+  width: 100%; // Required because we use flexbox and this inherently applies align-self: stretch
+  @include border-radius($card-inner-border-radius);
+}
+
+// Card image caps
+.card-img-top {
+  width: 100%; // Required because we use flexbox and this inherently applies align-self: stretch
+  @include border-top-radius($card-inner-border-radius);
+}
+
+.card-img-bottom {
+  width: 100%; // Required because we use flexbox and this inherently applies align-self: stretch
+  @include border-bottom-radius($card-inner-border-radius);
 }
 
 
-.blog-wrapper {
-	@include flex;
-	align-items: center; 
+// Card deck
 
-	.img-wrapper {
-		min-width: 350px;
-		max-width: 350px;
-		position: relative;
-		margin-right: 30px;
+.card-deck {
+  display: flex;
+  flex-direction: column;
 
-		img {
-			width: 100%;
-			border-radius: $card-border-radius;
-			box-shadow: 0 0 25px rgba($gray-600, .2);
-		}
+  .card {
+    margin-bottom: $card-deck-margin;
+  }
 
-		.date-container	{
-			position: absolute; 
-			top: 20px;
-			left: 20px;		
-			color: white;
-			text-align: center;
-			font-weight: bold;
-			border-radius: $card-border-radius;
-			overflow: hidden;
+  @include media-breakpoint-up(sm) {
+    flex-flow: row wrap;
+    margin-right: -$card-deck-margin;
+    margin-left: -$card-deck-margin;
 
-			.day {
-				font-size: 25px;
-				background: lighten($primary, 15%);
-				margin: 0;
-				width: 50px;
-				height: 50px;
-				line-height: 50px;
-				margin: 0;
-			}  
-
-			.mun {
-				font-size: 20px;
-				background: lighten($primary, 7%);		
-				margin: 0;
-				padding: 5px 0;		
-			}  
-		}
-	}
-	.txt-wrapper {
-		flex-grow: 1; 
-		padding-right: 20px;
-
-		.badge {
-			margin: 15px 0 0;
-		}
-
-		.blog-footer {
-			margin-top: 15px;
-			color: $gray-700;
-			font-size: 14px;
-			opacity: .8;
-			a {
-				display: inline-block;
-				margin: 0 10px;
-				color: $gray-700;	
-
-				i {
-					display: inline-block;
-					width: 15px;
-				}
-
-				&:first-child {
-					margin-left: 0;
-				}		
-			}
-		}
-	}
+    .card {
+      display: flex;
+      // Flexbugs #4: https://github.com/philipwalton/flexbugs#flexbug-4
+      flex: 1 0 0%;
+      flex-direction: column;
+      margin-right: $card-deck-margin;
+      margin-bottom: 0; // Override the default
+      margin-left: $card-deck-margin;
+    }
+  }
 }
-@include media-breakpoint-down(sm) {
 
-	.blog-wrapper {
-		flex-direction: column;
 
-		.img-wrapper {
-			margin-right: 0;
-			min-width: 100%;
-			max-width: 100%;
-			margin-bottom: 10px;
+//
+// Card groups
+//
 
-			img {
-				width: 100%;
-			}
-		}
-	}
+.card-group {
+  display: flex;
+  flex-direction: column;
+
+  // The child selector allows nested `.card` within `.card-group`
+  // to display properly.
+  > .card {
+    margin-bottom: $card-group-margin;
+  }
+
+  @include media-breakpoint-up(sm) {
+    flex-flow: row wrap;
+    // The child selector allows nested `.card` within `.card-group`
+    // to display properly.
+    > .card {
+      // Flexbugs #4: https://github.com/philipwalton/flexbugs#flexbug-4
+      flex: 1 0 0%;
+      margin-bottom: 0;
+
+      + .card {
+        margin-left: 0;
+        border-left: 0;
+      }
+
+      // Handle rounded corners
+      @if $enable-rounded {
+        &:not(:last-child) {
+          @include border-right-radius(0);
+
+          .card-img-top,
+          .card-header {
+            // stylelint-disable-next-line property-blacklist
+            border-top-right-radius: 0;
+          }
+          .card-img-bottom,
+          .card-footer {
+            // stylelint-disable-next-line property-blacklist
+            border-bottom-right-radius: 0;
+          }
+        }
+
+        &:not(:first-child) {
+          @include border-left-radius(0);
+
+          .card-img-top,
+          .card-header {
+            // stylelint-disable-next-line property-blacklist
+            border-top-left-radius: 0;
+          }
+          .card-img-bottom,
+          .card-footer {
+            // stylelint-disable-next-line property-blacklist
+            border-bottom-left-radius: 0;
+          }
+        }
+      }
+    }
+  }
+}
+
+
+//
+// Columns
+//
+
+.card-columns {
+  .card {
+    margin-bottom: $card-columns-margin;
+  }
+
+  @include media-breakpoint-up(sm) {
+    column-count: $card-columns-count;
+    column-gap: $card-columns-gap;
+    orphans: 1;
+    widows: 1;
+
+    .card {
+      display: inline-block; // Don't let them vertically span multiple columns
+      width: 100%; // Don't let their width change
+    }
+  }
+}
+
+
+//
+// Accordion
+//
+
+.accordion {
+  > .card {
+    overflow: hidden;
+
+    &:not(:first-of-type) {
+      .card-header:first-child {
+        @include border-radius(0);
+      }
+
+      &:not(:last-of-type) {
+        border-bottom: 0;
+        @include border-radius(0);
+      }
+    }
+
+    &:first-of-type {
+      border-bottom: 0;
+      @include border-bottom-radius(0);
+    }
+
+    &:last-of-type {
+      @include border-top-radius(0);
+    }
+
+    .card-header {
+      margin-bottom: -$card-border-width;
+    }
+  }
 }
